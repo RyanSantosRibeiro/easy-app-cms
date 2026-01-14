@@ -1,10 +1,11 @@
 import { createClient } from "@/lib/supabase/server"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ProfileSettings } from "@/components/dashboard/profile-settings"
 import { SecuritySettings } from "@/components/dashboard/security-settings"
 import { redirect } from "next/navigation"
 import { SubscriptionPanel } from "@/components/dashboard/settings/subscription"
+import { PageHeader } from "@/components/PageHeader"
+import { User, Shield, Zap } from "lucide-react"
 
 export default async function SettingsPage() {
   const supabase = await createClient()
@@ -24,50 +25,68 @@ export default async function SettingsPage() {
 
   if (!subscription || subscription === null) {
     const { data: plansData } = await supabase.from("plans").select("*")
-    console.log({plansData})
     if (plansData) {
       plans.push(...plansData)
     }
   }
-  return (
-    <div className="space-y-6 p-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Configurações</h1>
-        <p className="text-muted-foreground">Gerencie suas informações pessoais e preferências</p>
-      </div>
 
-      <Tabs defaultValue="profile" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="profile">Perfil</TabsTrigger>
-          <TabsTrigger value="security">Segurança</TabsTrigger>
+  return (
+    <div className="space-y-10 p-8 max-w-7xl mx-auto">
+      <PageHeader
+        title="Configurações Pessoais"
+        description="Gerencie seu perfil, preferências de segurança e faturamento."
+      />
+
+      <Tabs defaultValue="profile" className="space-y-8">
+        <TabsList className="bg-gray-100/50 p-1.5 rounded-2xl border border-gray-100 h-auto gap-2">
+          <TabsTrigger
+            value="profile"
+            className="rounded-xl px-6 py-2.5 data-[state=active]:bg-white data-[state=active]:shadow-lg data-[state=active]:text-primary font-bold transition-all flex items-center gap-2"
+          >
+            <User size={16} />
+            Meu Perfil
+          </TabsTrigger>
+          <TabsTrigger
+            value="security"
+            className="rounded-xl px-6 py-2.5 data-[state=active]:bg-white data-[state=active]:shadow-lg data-[state=active]:text-primary font-bold transition-all flex items-center gap-2"
+          >
+            <Shield size={16} />
+            Segurança
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="profile" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Informações Pessoais</CardTitle>
-              <CardDescription>Atualize suas informações pessoais e como os outros te veem</CardDescription>
-            </CardHeader>
-            <CardContent>
+        <TabsContent value="profile" className="space-y-8 animate-in fade-in duration-500">
+          <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden">
+            <div className="p-8 border-b border-gray-50 bg-gray-50/50">
+              <h3 className="text-xl font-black text-gray-900">Informações Pessoais</h3>
+              <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Atualize como você é visto na plataforma</p>
+            </div>
+            <div className="p-8">
               <ProfileSettings profile={profile} userEmail={user.email || ""} />
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </TabsContent>
 
-        <TabsContent value="security" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Segurança</CardTitle>
-              <CardDescription>Gerencie sua senha e configurações de segurança</CardDescription>
-            </CardHeader>
-            <CardContent>
+        <TabsContent value="security" className="space-y-8 animate-in fade-in duration-500">
+          <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden">
+            <div className="p-8 border-b border-gray-50 bg-gray-50/50">
+              <h3 className="text-xl font-black text-gray-900">Segurança da Conta</h3>
+              <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Gerencie sua senha e métodos de autenticação</p>
+            </div>
+            <div className="p-8">
               <SecuritySettings />
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </TabsContent>
       </Tabs>
 
-      <SubscriptionPanel subscription={subscription}  processing={false} plans={plans}/>
+      <div className="pt-4 border-t border-gray-100">
+        <div className="flex items-center gap-2 mb-6">
+          <Zap className="text-primary" size={20} />
+          <h3 className="text-lg font-black text-gray-900">Plano e Faturamento</h3>
+        </div>
+        <SubscriptionPanel subscription={subscription} processing={false} plans={plans} />
+      </div>
     </div>
   )
 }

@@ -76,7 +76,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ profile }) => {
                     {/* STEP 1: WELCOME */}
                     {step === 1 && (
                         <div className="flex-1 flex flex-col items-center text-center justify-center animate-[fadeIn_0.5s_ease-out]">
-                            <div className="w-20 h-20 bg-[#e7fce3] rounded-full flex items-center justify-center text-[#1ca0b5] mb-6">
+                            <div className="w-20 h-20 bg-primary/5 rounded-full flex items-center justify-center text-[#1ca0b5] mb-6">
                                 <svg className="w-10 h-10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" /></svg>
                             </div>
                             <h1 className="text-3xl font-bold text-[#111b21] mb-4">
@@ -135,7 +135,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ profile }) => {
                             <div className="flex flex-col items-center justify-center mb-8">
                                 <div className="bg-white p-4 rounded-xl border-2 border-dashed border-[#d1d7db] relative">
                                     {whatsappStatus === 'connected' ? (
-                                        <div className="w-48 h-48 flex flex-col items-center justify-center bg-[#e7fce3] rounded-lg animate-[scaleIn_0.3s_ease-out]">
+                                        <div className="w-48 h-48 flex flex-col items-center justify-center bg-primary/5 rounded-lg animate-[scaleIn_0.3s_ease-out]">
                                             <div className="w-16 h-16 bg-[#1ca0b5] rounded-full flex items-center justify-center text-white mb-2 shadow-lg">
                                                 <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" /></svg>
                                             </div>

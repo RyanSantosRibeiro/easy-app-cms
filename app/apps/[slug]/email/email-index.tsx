@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import { Mail, Lock, Info, Check, AlertCircle, FileText, Server } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export const EmailSettings: React.FC = () => {
     // State for form fields
@@ -12,13 +13,17 @@ export const EmailSettings: React.FC = () => {
     const [port, setPort] = useState('465');
     const [security, setSecurity] = useState<'Plain' | 'SSL' | 'TSL'>('SSL');
 
+    const { toast } = useToast();
     const [isVerifying, setIsVerifying] = useState(false);
 
     const handleVerify = () => {
         setIsVerifying(true);
         setTimeout(() => {
             setIsVerifying(false);
-            alert("Connection Verified Successfully!");
+            toast({
+                title: "Connection Verified",
+                description: "SMTP settings are correct and server is reachable.",
+            })
         }, 1500);
     };
 
@@ -94,7 +99,7 @@ export const EmailSettings: React.FC = () => {
                                 type="text"
                                 value={fromName}
                                 onChange={e => setFromName(e.target.value)}
-                                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                                 placeholder="e.g. Acme Support"
                             />
                         </div>
@@ -106,7 +111,7 @@ export const EmailSettings: React.FC = () => {
                                 type="email"
                                 value={fromEmail}
                                 onChange={e => setFromEmail(e.target.value)}
-                                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                                 placeholder="e.g. support@acme.com"
                             />
                         </div>
@@ -119,7 +124,7 @@ export const EmailSettings: React.FC = () => {
                                 <div className="flex items-center gap-4">
                                     <span className="text-xs font-bold text-gray-400 w-16 text-right">From:</span>
                                     <div className="text-sm text-gray-900 font-medium">
-                                        {fromName || 'Sender Name'} <span className="text-indigo-600 font-normal">&lt;{fromEmail || 'email@example.com'}&gt;</span>
+                                        {fromName || 'Sender Name'} <span className="text-primary font-normal">&lt;{fromEmail || 'email@example.com'}&gt;</span>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-4">
@@ -166,7 +171,7 @@ export const EmailSettings: React.FC = () => {
                             type="text"
                             value={host}
                             onChange={e => setHost(e.target.value)}
-                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                             placeholder="smtp.example.com"
                         />
                     </div>
@@ -178,7 +183,7 @@ export const EmailSettings: React.FC = () => {
                             type="text"
                             value={username}
                             onChange={e => setUsername(e.target.value)}
-                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                             placeholder="Required for authentication"
                         />
                     </div>
@@ -190,7 +195,7 @@ export const EmailSettings: React.FC = () => {
                             type="password"
                             value={password}
                             onChange={e => setPassword(e.target.value)}
-                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                             placeholder="••••••••••••"
                         />
                     </div>
@@ -221,7 +226,7 @@ export const EmailSettings: React.FC = () => {
                             <select
                                 value={port}
                                 onChange={e => setPort(e.target.value)}
-                                className="w-full px-4 py-3.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none bg-white"
+                                className="w-full px-4 py-3.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary focus:border-transparent outline-none bg-white"
                             >
                                 <option value="25">25</option>
                                 <option value="465">465</option>
@@ -233,7 +238,7 @@ export const EmailSettings: React.FC = () => {
                 </div>
             </div>
 
-            
+
         </div>
     );
 };

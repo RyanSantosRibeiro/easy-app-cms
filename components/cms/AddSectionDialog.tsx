@@ -23,11 +23,11 @@ export const AddSectionDialog: React.FC<AddSectionDialogProps> = ({ open, onOpen
     // Helper to get icon based on name (simple heuristic)
     const getIcon = (name: string) => {
         const lower = name.toLowerCase();
-        if (lower.includes('hero')) return <Layout className="w-8 h-8 text-indigo-500 mb-2" />;
-        if (lower.includes('text') || lower.includes('content')) return <Type className="w-8 h-8 text-indigo-500 mb-2" />;
-        if (lower.includes('image') || lower.includes('gallery')) return <Image className="w-8 h-8 text-indigo-500 mb-2" />;
-        if (lower.includes('grid') || lower.includes('feature')) return <Grid className="w-8 h-8 text-indigo-500 mb-2" />;
-        return <Box className="w-8 h-8 text-indigo-500 mb-2" />;
+        if (lower.includes('hero')) return <Layout className="w-8 h-8 text-primary mb-2" />;
+        if (lower.includes('text') || lower.includes('content')) return <Type className="w-8 h-8 text-primary mb-2" />;
+        if (lower.includes('image') || lower.includes('gallery')) return <Image className="w-8 h-8 text-primary mb-2" />;
+        if (lower.includes('grid') || lower.includes('feature')) return <Grid className="w-8 h-8 text-primary mb-2" />;
+        return <Box className="w-8 h-8 text-primary mb-2" />;
     };
 
     return (

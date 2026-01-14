@@ -74,7 +74,7 @@ export const InboxSidebar: React.FC<SidebarProps> = ({ conversations, selectedId
                         <button
                             key={f}
                             onClick={() => onFilterChange(f as any)}
-                            className={`cursor-pointer px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors capitalize ${filter === f ? 'bg-[#e7fce3] text-[#008069]' : 'bg-[#f0f2f5] text-[#54656f] hover:bg-[#e9edef]'}`}
+                            className={`cursor-pointer px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors capitalize ${filter === f ? 'bg-primary/5 text-[#008069]' : 'bg-[#f0f2f5] text-[#54656f] hover:bg-[#e9edef]'}`}
                         >
                             {f.replace('_', ' ')}
                         </button>

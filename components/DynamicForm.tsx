@@ -1,17 +1,22 @@
 import React from 'react';
-import { Plus, Trash2, Info, ChevronRight, ArrowLeft, GripVertical } from 'lucide-react';
+import { Plus, Trash2, Info, ChevronRight, ArrowLeft, GripVertical, Image as ImageIcon, X } from 'lucide-react';
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
 import { StrictModeDroppable } from '@/components/StrictModeDroppable';
+import { AssetPickerDialog } from '@/components/cms/AssetPickerDialog';
+import ColorPicker from 'react-best-gradient-color-picker';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 interface DynamicFormProps {
   schema: any;
   data: any;
   onChange: (newData: any) => void;
   root?: boolean;
+  slug?: string;
 }
 
-export const DynamicForm: React.FC<DynamicFormProps> = ({ schema, data, onChange, root = true }) => {
+export const DynamicForm: React.FC<DynamicFormProps> = ({ schema, data, onChange, root = true, slug }) => {
   const [focusedField, setFocusedField] = React.useState<string | null>(null);
+  const [isAssetPickerOpen, setIsAssetPickerOpen] = React.useState(false);
 
   // Handle empty state initialization if data is undefined or null
   React.useEffect(() => {
@@ -52,6 +57,7 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({ schema, data, onChange
                 data={data[key]}
                 onChange={(val) => onChange({ ...data, [key]: val })}
                 root={false}
+                slug={slug}
               />
             </div>
           );
@@ -122,6 +128,7 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({ schema, data, onChange
               data={items[focusedIndex]}
               onChange={(val) => updateItem(focusedIndex, val)}
               root={false}
+              slug={slug}
             />
           </div>
         </div>
@@ -209,6 +216,7 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({ schema, data, onChange
                                   data={item}
                                   onChange={(val) => updateItem(idx, val)}
                                   root={false}
+                                  slug={slug}
                                 />
                               </div>
                               <button
@@ -242,12 +250,89 @@ export const DynamicForm: React.FC<DynamicFormProps> = ({ schema, data, onChange
 
   // Render String
   if (schema.type === 'string') {
+    if (schema.widget === 'image-uploader') {
+      return (
+        <div className="space-y-2">
+          {data ? (
+            <div className="relative w-full group rounded-lg overflow-hidden border border-gray-200 bg-gray-50 hover:border-primary transition-all">
+              <img
+                src={data}
+                alt="Preview"
+                className="w-full h-full object-contain cursor-pointer max-h-[200px]"
+                onClick={() => setIsAssetPickerOpen(true)}
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                <p className="text-white text-[10px] font-bold">CHANGE IMAGE</p>
+              </div>
+              <button
+                onClick={() => onChange('')}
+                className="absolute top-1 right-1 p-1 bg-white/90 text-red-500 rounded-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white shadow-sm"
+                title="Remove image"
+              >
+                <X size={14} />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => setIsAssetPickerOpen(true)}
+              className="w-full max-w-[200px] aspect-video border-2 border-dashed border-gray-200 rounded-lg flex flex-col items-center justify-center text-gray-400 hover:border-primary hover:bg-primary/5 hover:text-primary transition-all"
+            >
+              <ImageIcon size={24} className="mb-2 opacity-40" />
+              <span className="text-xs font-medium">Select Image</span>
+            </button>
+          )}
+
+          {slug && (
+            <AssetPickerDialog
+              slug={slug}
+              open={isAssetPickerOpen}
+              onOpenChange={setIsAssetPickerOpen}
+              onSelect={(url) => onChange(url)}
+            />
+          )}
+        </div>
+      );
+    }
+
+    if (schema.widget === 'color-picker') {
+      return (
+        <div className="flex gap-2">
+          <Popover>
+            <PopoverTrigger asChild>
+              <button
+                className="w-10 h-10 rounded-lg border border-gray-200 shrink-0 shadow-inner cursor-pointer hover:ring-2 hover:ring-primary/20 transition-all"
+                style={{ backgroundColor: data || '#ffffff' }}
+              />
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-3" align="start">
+              <ColorPicker
+                value={data || '#ffffff'}
+                onChange={(val) => onChange(val)}
+                hideControls={true}
+                hidePresets={true}
+                hideOpacity={true}
+                width={220}
+                height={180}
+              />
+            </PopoverContent>
+          </Popover>
+          <input
+            type="text"
+            value={data || ''}
+            onChange={(e) => onChange(e.target.value)}
+            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm font-mono"
+            placeholder="#000000"
+          />
+        </div>
+      );
+    }
+
     return (
       <input
         type="text"
         value={data || ''}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
         placeholder={schema.description || 'Enter text...'}
       />
     );

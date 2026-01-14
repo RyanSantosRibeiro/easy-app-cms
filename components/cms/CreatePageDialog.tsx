@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/label';
 import { Loader2 } from 'lucide-react';
 import { createPage } from '@/actions/cms';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/use-toast';
 
 interface CreatePageDialogProps {
     projectId: string;
@@ -24,6 +25,7 @@ interface CreatePageDialogProps {
 
 export const CreatePageDialog: React.FC<CreatePageDialogProps> = ({ projectId, open, onOpenChange, onSuccess }) => {
     const router = useRouter();
+    const { toast } = useToast();
     const [title, setTitle] = useState('');
     const [slug, setSlug] = useState('');
     const [loading, setLoading] = useState(false);
@@ -46,6 +48,10 @@ export const CreatePageDialog: React.FC<CreatePageDialogProps> = ({ projectId, o
         if (submitError) {
             setError(submitError);
         } else {
+            toast({
+                title: "Page created",
+                description: `"${title}" has been successfully created.`,
+            })
             router.refresh();
             onOpenChange(false);
             if (data && onSuccess) onSuccess(data.id);

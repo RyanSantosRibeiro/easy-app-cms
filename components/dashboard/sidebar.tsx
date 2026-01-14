@@ -68,7 +68,7 @@ export function Sidebar({ role, menuOptions }: { role: string; menuOptions?: any
 
   const navigation: MenuGroup[] = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
-    { name: "Apps", href: "/dashboard/apps", icon: BoxIcon},
+    { name: "Apps", href: "/dashboard/apps", icon: BoxIcon },
     { name: "Equipe", href: "/dashboard/team", icon: Users, isAdminRequired: true },
     { name: "Empresa", href: "/dashboard/company", icon: Building2, isAdminRequired: true },
     { name: "Configurações", href: "/dashboard/settings", icon: Settings, isAdminRequired: true },
@@ -146,7 +146,7 @@ export function Sidebar({ role, menuOptions }: { role: string; menuOptions?: any
                           href={sub.href}
                           className={cn(
                             "block px-3 py-2 rounded text-sm transition-colors flex items-center gap-4",
-                            subActive ? "bg-[#e7fce3] text-[#008069]" : "text-[#54656f] hover:bg-[#f0f2f5]",
+                            subActive ? "bg-primary/5 text-[#008069]" : "text-[#54656f] hover:bg-[#f0f2f5]",
                           )}
                         >
                           <Icon className="h-5 w-5 shrink-0" />

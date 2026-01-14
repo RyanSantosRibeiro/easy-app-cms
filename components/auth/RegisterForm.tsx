@@ -158,7 +158,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister, loading,
                   <Button
                      type="submit"
                      disabled={loading}
-                     className="w-full bg-[#1ca0b5] hover:bg-[#008f6f] text-white font-bold py-3 rounded-lg transition-all shadow-lg shadow-green-200 hover:shadow-green-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center text-base"
+                     className="w-full bg-[#1ca0b5] hover:bg-primary/80 text-white font-bold py-3 rounded-lg transition-all shadow-lg shadow-green-200 hover:shadow-green-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center text-base"
                   >
                      {loading ? (
                         <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

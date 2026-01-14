@@ -107,7 +107,7 @@ export const BotConfigEditor: React.FC<BotEditorProps> = ({
             <button
                 onClick={onSave}
                 disabled={saving}
-                className="w-full py-3 bg-[#1ca0b5] hover:bg-[#008f6f] text-white rounded font-bold shadow-sm disabled:opacity-70 transition-all"
+                className="w-full py-3 bg-[#1ca0b5] hover:bg-primary/80 text-white rounded font-bold shadow-sm disabled:opacity-70 transition-all"
             >
                 {saving ? 'Saving...' : 'Save Configuration'}
             </button>
@@ -186,7 +186,7 @@ export const QATable: React.FC<QATableProps> = ({ items, onAddClick }) => (
             <h3 className="font-bold text-[#111b21]">Knowledge Base Items</h3>
             <button
                 onClick={onAddClick}
-                className="bg-[#1ca0b5] hover:bg-[#008f6f] text-white px-4 py-2 rounded shadow-sm font-medium transition-colors flex items-center gap-2 text-sm"
+                className="bg-[#1ca0b5] hover:bg-primary/80 text-white px-4 py-2 rounded shadow-sm font-medium transition-colors flex items-center gap-2 text-sm"
             >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
                 Add Q&A
@@ -207,7 +207,7 @@ export const QATable: React.FC<QATableProps> = ({ items, onAddClick }) => (
                         <td className="px-6 py-4 text-[#111b21] font-medium">{item.question}</td>
                         <td className="px-6 py-4 text-[#3b4a54] text-sm">{item.answer}</td>
                         <td className="px-6 py-4">
-                            <span className="px-2 py-1 rounded-full text-xs font-medium bg-[#e7fce3] text-[#008069]">Active</span>
+                            <span className="px-2 py-1 rounded-full text-xs font-medium bg-primary/5 text-[#008069]">Active</span>
                         </td>
                         <td className="px-6 py-4">
                             <button className="text-[#1ca0b5] hover:text-[#008f6f] font-medium text-sm">Edit</button>
@@ -291,7 +291,7 @@ export const QAModal: React.FC<QAModalProps> = ({
                 </div>
                 <div className="bg-[#f0f2f5] px-6 py-4 flex justify-end gap-3 border-t border-[#e9edef]">
                     <button onClick={onClose} className="px-4 py-2 text-[#54656f] hover:text-[#3b4a54] font-medium border border-[#d1d7db] rounded bg-white">Cancel</button>
-                    <button onClick={onSave} className="px-4 py-2 bg-[#1ca0b5] hover:bg-[#008f6f] text-white rounded font-medium shadow-sm">Save Item</button>
+                    <button onClick={onSave} className="px-4 py-2 bg-[#1ca0b5] hover:bg-primary/80 text-white rounded font-medium shadow-sm">Save Item</button>
                 </div>
             </div>
         </div>

@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/label';
 import { Loader2 } from 'lucide-react';
 import { createDraft } from '@/actions/cms';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/use-toast';
 
 interface CreateDraftDialogProps {
     pageId: string;
@@ -26,6 +27,7 @@ interface CreateDraftDialogProps {
 
 export const CreateDraftDialog: React.FC<CreateDraftDialogProps> = ({ pageId, fromVersionId, fromVersionName, open, onOpenChange, onSuccess }) => {
     const router = useRouter();
+    const { toast } = useToast();
     const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -47,6 +49,10 @@ export const CreateDraftDialog: React.FC<CreateDraftDialogProps> = ({ pageId, fr
         if (submitError) {
             setError(submitError);
         } else {
+            toast({
+                title: "Draft created",
+                description: `"${name}" has been successfully created.`,
+            })
             router.refresh();
             onOpenChange(false);
             if (data && onSuccess) onSuccess(data.id);

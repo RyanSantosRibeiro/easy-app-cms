@@ -37,7 +37,7 @@ export const SubscriptionPanel: React.FC<SubscriptionProps> = ({ subscription, p
         <div className="bg-card rounded shadow-sm border border-[#e9edef] overflow-hidden p-6 relative">
             <div className="flex justify-between items-center mb-4 border-b border-[#e9edef] pb-2">
                 <h2 className="text-lg font-bold text-[#111b21]">Subscription & Limits</h2>
-                {subscription?.status === 'active' && <span className="text-xs bg-[#e7fce3] text-[#008069] font-bold px-2 py-1 rounded uppercase">Active</span>}
+                {subscription?.status === 'active' && <span className="text-xs bg-primary/5 text-[#008069] font-bold px-2 py-1 rounded uppercase">Active</span>}
                 {subscription?.status === 'past_due' && <span className="text-xs bg-red-100 text-red-600 font-bold px-2 py-1 rounded uppercase">Past Due</span>}
                 {subscription?.status === 'canceled' && <span className="text-xs bg-gray-100 text-gray-500 font-bold px-2 py-1 rounded uppercase">Canceled</span>}
             </div>
@@ -129,12 +129,12 @@ export const SubscriptionPanel: React.FC<SubscriptionProps> = ({ subscription, p
                             <div
                                 key={plan.name}
                                 className={`rounded-xl p-4 flex flex-col border transition-all ${plan.recommended
-                                        ? 'border-[#1ca0b5] bg-[#e7fce3]/30 shadow-md scale-105 z-10'
-                                        : 'border-[#e9edef] bg-white hover:shadow-sm'
+                                    ? 'border-[#1ca0b5] bg-primary/5/30 shadow-md scale-105 z-10'
+                                    : 'border-[#e9edef] bg-white hover:shadow-sm'
                                     }`}
                             >
                                 {plan.recommended && (
-                                    <div className="text-xs font-bold text-[#1ca0b5] uppercase tracking-wide mb-2 text-center bg-[#e7fce3] py-1 rounded-full w-fit px-3 mx-auto">
+                                    <div className="text-xs font-bold text-[#1ca0b5] uppercase tracking-wide mb-2 text-center bg-primary/5 py-1 rounded-full w-fit px-3 mx-auto">
                                         Mais Popular
                                     </div>
                                 )}

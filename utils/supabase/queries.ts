@@ -76,12 +76,24 @@ export const getProject = cache(async (supabase: SupabaseClient, slug: string) =
             .eq("slug", slug)
             .single()
 
-            // get sections definitions where project_id == null
-            const { data: sectionDefinitions, error: sectionDefinitionsError } = await supabase.from("section_definitions").select("*").or(`project_id.is.null,project_id.eq.${project.id}`)
-            console.log({ sectionDefinitions, sectionDefinitionsError })
-            if (sectionDefinitions) {
-                project.sectionDefinitions = [...project.sectionDefinitions, ...sectionDefinitions];
-            }
+        // get sections definitions where project_id == null OR project_id == project.id
+        const { data: sectionDefinitions, error: sectionDefinitionsError } = await supabase
+            .from("section_definitions")
+            .select("*")
+            .or(`project_id.is.null,project_id.eq.${project.id}`)
+
+        if (sectionDefinitions) {
+            // Use a Map to ensure unique definitions by ID
+            const definitionsMap = new Map();
+
+            // Add definitions already fetched in the project query (if any)
+            project.sectionDefinitions?.forEach((def: any) => definitionsMap.set(def.id, def));
+
+            // Add definitions from the separate query (overwriting or adding new ones)
+            sectionDefinitions.forEach((def: any) => definitionsMap.set(def.id, def));
+
+            project.sectionDefinitions = Array.from(definitionsMap.values());
+        }
         if (error) {
             console.log({ getProjectError: error });
             return null;

@@ -117,7 +117,7 @@ export interface Contact {
 
 export interface App {
   id: string
-  name: string  
+  name: string
   slug: string
   logo_url: string | null
   company_id: string
@@ -137,6 +137,7 @@ export interface JSONSchema {
   minLength?: number;
   minItems?: number;
   additionalProperties?: boolean;
+  widget?: string;
 }
 
 // --- Database Entities (Matching Supabase Tables) ---
@@ -188,8 +189,33 @@ export interface AppPage {
 export interface Project {
   id: string;
   name: string;
+  slug: string;
   description: string;
-  logo: string;
+  logo_url: string;
+  theme: {
+    colors: {
+      base: string;
+      primary: string;
+      secondary: string;
+      accent: string;
+      neutral: string;
+    };
+    buttonStyle: {
+      borderWidth: string;
+      radius: string;
+      scaleOnClick: number;
+      animationDuration: string;
+    };
+    fontFamily: string;
+  };
+  menus: {
+    horizontal: {
+      items: Array<{ label: string; href: string; icon?: string }>;
+    };
+    drawer: {
+      items: Array<{ label: string; href: string; icon?: string }>;
+    };
+  };
   pages: AppPage[];
   sectionDefinitions: SectionDefinition[]; // Defined by Devs
   assets: AppAsset[];

@@ -24,7 +24,7 @@ export const FeaturePreview: React.FC<FeaturePreviewProps> = ({
             {/* Left Content */}
             <div className="flex-1 max-w-xl space-y-8">
                 {badge && (
-                    <span className="inline-block px-3 py-1 bg-primary-50 text-indigo-600 text-xs font-bold tracking-wide uppercase rounded-full">
+                    <span className="inline-block px-3 py-1 bg-primary-50 text-primary text-xs font-bold tracking-wide uppercase rounded-full">
                         {badge}
                     </span>
                 )}

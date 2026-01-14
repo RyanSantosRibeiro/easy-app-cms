@@ -1,8 +1,9 @@
 import { createClient } from "@/lib/supabase/server"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { InviteMemberDialog } from "@/components/dashboard/invite-member-dialog"
 import { redirect } from "next/navigation"
 import { TeamMembersTable } from "@/components/dashboard/team-members-list"
+import { PageHeader } from "@/components/PageHeader"
+import { Users } from "lucide-react"
 
 export default async function TeamPage() {
   const supabase = await createClient()
@@ -14,7 +15,7 @@ export default async function TeamPage() {
     redirect("/login")
   }
 
-  // Get user's first company (for simplicity, in a real app you'd select from multiple)
+  // Get user's first company
   const { data: company, error } = await supabase
     .from("companies")
     .select(`
@@ -38,17 +39,13 @@ export default async function TeamPage() {
     .eq("owner_id", user.id)
     .single()
 
-
-
-  console.log({ company, error })
-
   if (!company) {
     return (
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Equipe</h1>
-          <p className="text-muted-foreground">Você precisa criar uma empresa primeiro</p>
-        </div>
+      <div className="space-y-10 p-8 max-w-7xl mx-auto">
+        <PageHeader
+          title="Equipe"
+          description="Você precisa criar uma empresa primeiro para gerenciar membros."
+        />
       </div>
     )
   }
@@ -77,26 +74,30 @@ export default async function TeamPage() {
   const isAdmin = userMembership?.role === "admin" || isOwner
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Equipe</h1>
-          <p className="text-muted-foreground">Gerencie os membros da sua equipe</p>
-        </div>
+    <div className="space-y-10 p-8 max-w-7xl mx-auto">
+      <PageHeader
+        title="Nossa Equipe"
+        description="Gerencie os membros da sua equipe e distribua permissões de acesso."
+      >
         {isAdmin && <InviteMemberDialog companyId={company.id} />}
-      </div>
+      </PageHeader>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Membros da Equipe</CardTitle>
-          <CardDescription>
-            {members?.length || 0} {members?.length === 1 ? "membro" : "membros"} na equipe
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+      <div className="bg-white rounded-[2.5rem] border border-gray-100 shadow-sm overflow-hidden">
+        <div className="p-8 border-b border-gray-50 flex items-center justify-between bg-gray-50/50">
+          <div>
+            <h3 className="text-xl font-black text-gray-900 flex items-center gap-2">
+              <Users size={20} className="text-primary" />
+              Membros Ativos
+            </h3>
+            <p className="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">
+              {members?.length || 0} {members?.length === 1 ? "Colaborador" : "Colaboradores"} registrados
+            </p>
+          </div>
+        </div>
+        <div className="p-4">
           <TeamMembersTable members={members || []} isAdmin={isAdmin} currentUserId={user.id} />
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   )
 }

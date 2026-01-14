@@ -72,7 +72,7 @@ const QrScanner = ({ status, sessionId, accessToken, onConnect, setStatus }: { s
             <div className="flex flex-col items-center justify-center mb-8">
                 <div className="bg-white p-4 rounded-xl border-2 border-dashed border-[#d1d7db] relative">
                     {whatsappStatus === 'connected' ? (
-                        <div className="w-48 h-48 flex flex-col items-center justify-center bg-[#e7fce3] rounded-lg animate-[scaleIn_0.3s_ease-out]">
+                        <div className="w-48 h-48 flex flex-col items-center justify-center bg-primary/5 rounded-lg animate-[scaleIn_0.3s_ease-out]">
                             <div className="w-16 h-16 bg-[#1ca0b5] rounded-full flex items-center justify-center text-white mb-2 shadow-lg">
                                 <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" /></svg>
                             </div>

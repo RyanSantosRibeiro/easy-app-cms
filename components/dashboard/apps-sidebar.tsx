@@ -23,6 +23,9 @@ import {
   Palette,
   LayoutDashboard,
   Image,
+  Menu,
+  MenuSquare,
+  Bell,
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
@@ -75,7 +78,7 @@ export function AppsSidebar({ role, slug }: { role: string; slug?: string }) {
       setHovered(false)
     }, 600)
   }
-  
+
   const handleLogout = async () => {
     const supabase = createClient()
     await supabase.auth.signOut()
@@ -87,7 +90,14 @@ export function AppsSidebar({ role, slug }: { role: string; slug?: string }) {
   const navigation: MenuGroup[] = [
     { name: "Dashboard", href: `/apps/${slug}`, icon: LayoutDashboard },
     { name: "Conteudo", href: `/apps/${slug}/cms`, icon: BoxIcon },
-    { name: "Design", href: `/apps/${slug}/design`, icon: Palette },
+    { name: "Theme", href: `/apps/${slug}/theme`, icon: Palette },
+    {
+      name: "Menu", href: `/apps/${slug}/menu`, icon: Menu,
+      children: [
+        { name: "Menu Horizontal", href: `/apps/${slug}/menu-horizontal`, icon: Menu },
+        { name: "Menu Lateral", href: `/apps/${slug}/menu-lateral`, icon: MenuSquare },
+      ]
+    },
     // Assets
     { name: "Assets", href: `/apps/${slug}/assets`, icon: Image },
     // Sections
@@ -96,10 +106,11 @@ export function AppsSidebar({ role, slug }: { role: string; slug?: string }) {
       href: `/apps/${slug}/sections`,
       icon: BoxIcon,
     },
-    { name: "Equipe", href: `/apps/${slug}/team`, icon: Users, isAdminRequired: true },
-    { name: "Empresa", href: `/apps/${slug}/company`, icon: Building2, isAdminRequired: true },
-    { name: "Configurações", href: `/apps/${slug}/settings`, icon: Settings, isAdminRequired: true },
-    { name: "Assinatura", href: `/apps/${slug}/subscription`, icon: CreditCardIcon, isAdminRequired: true },
+    {
+      name: "Notificações",
+      href: `/apps/${slug}/notifications`,
+      icon: Bell,
+    },
 
     // 👉 ITEM COM "EM BREVE"
     {
@@ -154,10 +165,10 @@ export function AppsSidebar({ role, slug }: { role: string; slug?: string }) {
           const Icon = item.icon
           const isActive = item.href === pathname
           const isDisabled = item.isSoon
-          const isOpen = openMenu === item.name 
+          const isOpen = openMenu === item.name
 
           const baseClasses = cn(
-            "min-h-[48px] flex items-center gap-4 px-4 py-3 border-l-[3px] transition-all",
+            "text-sm min-h-[48px] flex items-center gap-4 px-4 py-3 border-l-[3px] transition-all",
             isActive && !isDisabled
               ? "border-[#1ca0b5] bg-[#f0f2f5]"
               : "border-transparent",
@@ -170,7 +181,7 @@ export function AppsSidebar({ role, slug }: { role: string; slug?: string }) {
           if (isDisabled) {
             return (
               <Link href={item.href} key={item.href} className={baseClasses}>
-                <Icon className="h-5 w-5 shrink-0" />
+                <Icon className="h-4 w-4 shrink-0" />
                 {isExpanded && (
                   <>
                     <span className="font-medium">{item.name}</span>
@@ -189,31 +200,34 @@ export function AppsSidebar({ role, slug }: { role: string; slug?: string }) {
               <div key={item.name}>
                 <div
                   className={cn(
-                    "min-h-[48px] flex items-center gap-4 px-4 py-3 border-l-[3px] transition-all hover:bg-[#f0f2f5]",
+                    "cursor-pointer min-h-[48px] flex items-center gap-4 px-4 py-3 border-l-[3px] transition-all hover:bg-[#f0f2f5]",
                     isActive ? "border-[#1ca0b5] bg-[#f0f2f5]" : "border-transparent",
                   )}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    setOpenMenu(isOpen ? null : item.name)
+                  }}
                 >
                   {/* LINK PRINCIPAL */}
-                  <Link href={item.href} className="flex items-center gap-4 flex-1">
-                    <Icon className="h-5 w-5 shrink-0" />
+                  <p className="flex items-center gap-4 flex-1" >
+                    <Icon className="h-4 w-4 shrink-0" />
 
-                    {isExpanded && <span className="font-medium">{item.name}</span>}
-                  </Link>
+                    {isExpanded && <span className="font-medium text-sm">{item.name}</span>}
 
-                  {/* BOTÃO DO DROPDOWN */}
+
+                  </p>
                   {isExpanded && (
                     <button
                       type="button"
-                      onClick={(e) => {
-                        e.preventDefault()
-                        e.stopPropagation()
-                        setOpenMenu(isOpen ? null : item.name)
-                      }}
+
                       className="p-1 rounded hover:bg-white cursor-pointer"
                     >
                       <ChevronDown className={cn("h-4 w-4 transition-transform", isOpen && "rotate-180")} />
                     </button>
                   )}
+                  {/* BOTÃO DO DROPDOWN */}
+
                 </div>
 
                 {/* SUBMENU */}
@@ -228,10 +242,10 @@ export function AppsSidebar({ role, slug }: { role: string; slug?: string }) {
                           href={sub.href}
                           className={cn(
                             "block px-3 py-2 rounded text-sm transition-colors flex items-center gap-4",
-                            subActive ? "bg-[#e7fce3] text-[#008069]" : "text-[#54656f] hover:bg-[#f0f2f5]",
+                            subActive ? "bg-primary/5 text-primary" : "text-[#54656f] hover:bg-[#f0f2f5]",
                           )}
                         >
-                          <Icon className="h-5 w-5 shrink-0" />
+                          <Icon className="h-4 w-4 shrink-0" />
                           {sub.name}
                           {sub?.flag && (
                             <span className="font-medium ml-auto bg-[#1ca0b5] text-white px-2 py-1 rounded">
@@ -250,7 +264,7 @@ export function AppsSidebar({ role, slug }: { role: string; slug?: string }) {
           // 👉 ITEM NORMAL
           return (
             <Link key={item.href} href={item.href} className={baseClasses}>
-              <Icon className="h-5 w-5 shrink-0" />
+              <Icon className="h-4 w-4 shrink-0" />
               {isExpanded && <span className="font-medium">{item.name}</span>}
             </Link>
           )
@@ -260,7 +274,7 @@ export function AppsSidebar({ role, slug }: { role: string; slug?: string }) {
       {/* FOOTER */}
       <div className="border-t p-2">
         <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
-          <LogOut className="h-5 w-5 shrink-0" />
+          <LogOut className="h-4 w-4 shrink-0" />
           {isExpanded && <span className="ml-3">Sair</span>}
         </Button>
       </div>

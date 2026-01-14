@@ -107,7 +107,7 @@ export const RecoveryForm: React.FC<RecoveryFormProps> = ({ sendNewPassword }) =
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-[#1ca0b5] hover:bg-[#008f6f] text-white font-bold py-3 rounded-lg"
+                  className="w-full bg-[#1ca0b5] hover:bg-primary/80 text-white font-bold py-3 rounded-lg"
                 >
                   {loading ? 'Redefinindo...' : 'Redefinir senha'}
                 </Button>
