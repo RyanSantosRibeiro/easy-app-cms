@@ -63,7 +63,10 @@ erDiagram
     SECTION_DEFINITION ||--|{ SECTION_INSTANCE : valida
 ```
 
-1.  **`pages`**: Identidade da tela (Slug, Título).
+1.  **`projects`**: Configurações globais do app, incluindo:
+    *   `theme` (JSONB): Design tokens globais (cores, fontes, bordas) compartilhados entre apps.
+    *   `menus` (JSONB): Estrutura de navegação (Tabbar, Drawer) dinâmica.
+2.  **`pages`**: Identidade da tela (Slug, Título).
 2.  **`page_versions`**: Snapshot no tempo (`status`, `version_name`).
 3.  **`section_definitions`**: Schemas (JSON) de como os componentes funcionam.
 4.  **`section_instances`**: O conteúdo real (JSONB) vinculado a uma versão específica e a uma definição.

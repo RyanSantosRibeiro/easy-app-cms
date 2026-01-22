@@ -31,7 +31,7 @@ export default async function AppsPage({ params }: { params: { slug: string } })
             illustration={
                 <div className="w-full max-w-sm mx-auto space-y-4">
                     <div className="flex justify-end">
-                        <div className="bg-primary-600 text-white p-4 rounded-2xl rounded-tr-none shadow-lg max-w-[80%]">
+                        <div className="bg-primary-600 text-black p-4 rounded-2xl rounded-tr-none shadow-lg max-w-[80%]">
                             Hi! When is the new feature coming out?
                         </div>
                     </div>
@@ -41,7 +41,7 @@ export default async function AppsPage({ params }: { params: { slug: string } })
                         </div>
                     </div>
                     <div className="flex justify-end">
-                        <div className="bg-primary-600 text-white p-4 rounded-2xl rounded-tr-none shadow-lg max-w-[80%] flex items-center gap-2">
+                        <div className="bg-primary-600 text-black p-4 rounded-2xl rounded-tr-none shadow-lg max-w-[80%] flex items-center gap-2">
                             Can't wait! <MessageCircle size={16} />
                         </div>
                     </div>

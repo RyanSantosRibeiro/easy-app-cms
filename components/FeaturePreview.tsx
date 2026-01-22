@@ -49,7 +49,7 @@ export const FeaturePreview: React.FC<FeaturePreviewProps> = ({
                     ))}
                 </ul>
 
-                <button className="bg-primary-600 text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-lg shadow-indigo-200 hover:bg-primary-700 hover:-translate-y-1 transition-all duration-200 flex items-center gap-2">
+                <button className="bg-primary-600 text-black px-8 py-3.5 rounded-xl font-bold text-sm shadow-lg shadow-indigo-200 hover:bg-primary-700 hover:-translate-y-1 transition-all duration-200 flex items-center gap-2">
                     {ctaText} <ArrowRight size={16} />
                 </button>
             </div>

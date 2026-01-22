@@ -18,7 +18,7 @@ export default async function AppsPage() {
     redirect("/auth/login")
   }
   
-  if(!profile || profile?.role !== "admin") {
+  if(!profile || (profile?.role !== "admin" && profile?.role !== "owner") ) {
     redirect("/dashboard")
   }
   
